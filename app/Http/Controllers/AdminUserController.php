@@ -118,7 +118,7 @@ class AdminUserController extends Controller
             $employee->name = $request->first_name . " " . $request->last_name;
             $employee->email = $request->email;
             $employee->email_verified_at = now();
-            $employee->password = $request->password;
+            $employee->password = bcrypt($request->password);
             $employee->remember_token = \Str::random(60);
             $employee->save();
             
@@ -178,7 +178,7 @@ class AdminUserController extends Controller
             $mentor->name = $request->first_name . " " . $request->last_name;
             $mentor->email = $request->email;
             $mentor->email_verified_at = now();
-            $mentor->password = $request->password;
+            $mentor->password = bcrypt($request->password);
             $mentor->remember_token = \Str::random(60);
             $mentor->save();
             
@@ -210,7 +210,7 @@ class AdminUserController extends Controller
     {
         try {
             $employee = User::find($id);
-            $employee->password = '@bePro123';
+            $employee->password = bcrypt('@bePro123');
             $employee->save();
             
             return redirect('/back-admin/user/list-employee')->withStatus('Berhasil mereset password.');
@@ -224,7 +224,7 @@ class AdminUserController extends Controller
     {
         try {
             $mentor = User::find($id);
-            $mentor->password = '@bePro123';
+            $mentor->password = bcrypt('@bePro123');
             $mentor->save();
             
             return redirect('/back-admin/user/list-mentor')->withStatus('Berhasil mereset password.');
