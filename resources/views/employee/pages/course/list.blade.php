@@ -57,21 +57,49 @@
                                     <button type="reset" class="btn btn-light btn-active-light-primary me-2 w-100">Selengkapnya</button>
                                 </div>
                                 <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary w-100">Enrolled</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    @foreach ($getCoursed as $item)   
+                    <div class="col-md-4 py-5">
+                        <div class="card-xl-stretch me-md-6">
+                            <a class="d-block bgi-no-repeat bgi-size-cover bgi-position-center card-rounded position-relative min-h-175px mb-10" style="background-image:url('{{asset('image/upload/course/thumbnail')}}/{{$item->thumbnail_image}}')" data-fslightbox="lightbox-video-tutorials" href="{{$item->thumbnail_video}}">
+                                <img src="{{asset('vendor/media/svg/misc/video-play.svg')}}" class="position-absolute top-50 start-50 translate-middle" alt="" />
+                            </a>
+                            <div class="m-0 h-250px">
+                                <a href="{{url('#')}}" class="fs-4 text-dark fw-bolder text-hover-primary text-dark lh-base">{{$item->course_name}}</a>
+                                <div class="fw-bold fs-5 text-gray-600 text-dark my-4">{{ \Illuminate\Support\Str::limit($item->description, 150, $end='...') }}</div>
+                                <div class="fs-6 fw-bolder">
+                                    <span class="text-gray-700 text-hover-primary">Keuntungan : </span>
+                                    @foreach ($getcBenefit as $itemBenefit)
+                                        @if ($itemBenefit->course_id == $item->id)  
+                                        <div class="d-flex align-items-center mt-2">
+                                            <span class="svg-icon svg-icon-1 svg-icon-success" style="margin-right: 10px;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="10" fill="black" />
+                                                    <path d="M10.4343 12.4343L8.75 10.75C8.33579 10.3358 7.66421 10.3358 7.25 10.75C6.83579 11.1642 6.83579 11.8358 7.25 12.25L10.2929 15.2929C10.6834 15.6834 11.3166 15.6834 11.7071 15.2929L17.25 9.75C17.6642 9.33579 17.6642 8.66421 17.25 8.25C16.8358 7.83579 16.1642 7.83579 15.75 8.25L11.5657 12.4343C11.2533 12.7467 10.7467 12.7467 10.4343 12.4343Z" fill="black" />
+                                                </svg>
+                                            </span>
+                                            <span class="fw-bold fs-6 text-gray-800 flex-grow-1 pe-3">{{$itemBenefit->benefit}}</span>
+                                        </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mt-5">
+                                <div class="col-md-6">
+                                    <button type="reset" class="btn btn-light btn-active-light-primary me-2 w-100">Selengkapnya</button>
+                                </div>
+                                <div class="col-md-6">
                                     <form action="{{url('/back-employee/enroll/enroll-course')}}/{{$item->id}}" method="POST" class="inline">
                                         @csrf
                                         <button type="submit" class="btn btn-primary w-100">Enroll</button>
                                     </form>
                                 </div>
-                                {{-- @foreach ($getEnroll as $itemEnroll)
-                                    @if ($itemEnroll->course_id != $item->id)
-                                    <div class="col-md-6">
-                                        <form action="{{url('/back-employee/enroll/enroll-course')}}/{{$item->id}}" method="POST" class="inline">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary w-100">Enroll</button>
-                                        </form>
-                                    </div>
-                                    @endif
-                                @endforeach --}}
                             </div>
                         </div>
                     </div>

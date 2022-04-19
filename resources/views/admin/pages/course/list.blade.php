@@ -100,13 +100,13 @@
                             </a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <div class="menu-item px-3">
-                                    <form action="{{url('/back-mentor/course/'.$item->id.'/edit-course')}}" method="POST" class="inline">
+                                    <form action="{{url('/back-admin/course/'.$item->id.'/edit-course')}}" method="POST" class="inline">
                                         @csrf
                                         <button type="submit" class="btn w-100 menu-link px-3 fs-7 text-center">Edit</button>
                                     </form>
                                 </div>
                                 <div class="menu-item px-3">
-                                    <form action="{{url('/back-mentor/course/'.$item->id.'/destroy-course')}}" method="POST" class="inline">
+                                    <form action="{{url('/back-admin/course/'.$item->id.'/destroy-course')}}" method="POST" class="inline">
                                         @method('delete')
                                         @csrf
                                         <button type="submit" class="btn w-100 menu-link px-3 fs-7 text-center" onclick="return confirm('Hapus Data ?')">Hapus</button>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\User;
 
 class AdminCourseController extends Controller
 {
@@ -34,6 +35,9 @@ class AdminCourseController extends Controller
     public function add()
     {
         try {
+            $this->param['getMentor'] = User::whereHas('roles', function($thisRole){
+                $thisRole->where('name', 'Mentor');
+            })->get();
             $this->param['getcCategory'] = CourseCategory::all();
 
             return view('admin.pages.course.add', $this->param);
@@ -83,6 +87,7 @@ class AdminCourseController extends Controller
             $course->thumbnail_video = $request->thumbnail_video;
             $course->category_id = $request->category;
             $course->slug = \Str::slug($request->course_name);
+            $course->user_id = $request->mentor;
             $course->save();
 
             return redirect('/back-admin/course/add-course')->withStatus('Berhasil menambah data.');
@@ -97,6 +102,9 @@ class AdminCourseController extends Controller
     {
         try {
             $this->param['getCourseDetail'] = Course::find($id);
+            $this->param['getMentor'] = User::whereHas('roles', function($thisRole){
+                $thisRole->where('name', 'Mentor');
+            })->get();
             $this->param['getcCategory'] = CourseCategory::all();
 
             return view('admin.pages.course.edit', $this->param);
@@ -144,6 +152,7 @@ class AdminCourseController extends Controller
             $course->thumbnail_video = $request->thumbnail_video;
             $course->category_id = $request->category;
             $course->slug = \Str::slug($request->course_name);
+            $course->user_id = $request->mentor;
             $course->save();
 
             return redirect('/back-admin/course/list-course')->withStatus('Berhasil memperbarui data.');

@@ -94,6 +94,16 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row mb-6">
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">Mentor</label>
+                            <div class="col-lg-8 fv-row">
+                                <select name="mentor" aria-label="Select a Timezone" data-control="select2" class="form-select form-select-solid form-select-lg">
+                                    @foreach ($getMentor as $item)
+                                    <option value="{{$item->id}}" @if ($getCourseDetail->user_id == $item->id) selected @endif>{{$item->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-end py-6 px-9">
                         <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>

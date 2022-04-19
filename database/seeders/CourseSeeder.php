@@ -20,6 +20,7 @@ class CourseSeeder extends Seeder
         $course->thumbnail_video = 'https://youtu.be/WEpKnd4tegI';
         $course->category_id = 1;
         $course->slug = 'pembelajaran-laravel-8';
+        $course->user_id = 2;
         $course->created_at = now();
         $course->updated_at = now();
         $course->save();
@@ -31,6 +32,7 @@ class CourseSeeder extends Seeder
         $course->thumbnail_video = 'https://youtu.be/L007GhpMR3U';
         $course->category_id = 2;
         $course->slug = 'pembelajaran-vuejs';
+        $course->user_id = 2;
         $course->created_at = now();
         $course->updated_at = now();
         $course->save();
@@ -42,6 +44,7 @@ class CourseSeeder extends Seeder
         $course->thumbnail_video = 'https://youtu.be/iywaBOMvYLI';
         $course->category_id = 3;
         $course->slug = 'pembelajaran-react-native';
+        $course->user_id = 2;
         $course->created_at = now();
         $course->updated_at = now();
         $course->save();

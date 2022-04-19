@@ -234,4 +234,62 @@ class AdminUserController extends Controller
             return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
         }
     }
+
+    public function deactiveEmployee($id)
+    {
+        try {
+            $employee = UserEmployee::where('user_id', '=', $id)->firstOrFail();
+            $employee->status_user = 'deactive';
+            $employee->save();
+            
+            return redirect('/back-admin/user/list-employee')->withStatus('Berhasil menonaktifkan karyawan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+    public function activeEmployee($id)
+    {
+        try {
+            $employee = UserEmployee::where('user_id', '=', $id)->firstOrFail();
+            $employee->status_user = 'active';
+            $employee->save();
+            
+            return redirect('/back-admin/user/list-employee')->withStatus('Berhasil mengaktifkan karyawan.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+
+    public function deactiveMentor($id)
+    {
+        try {
+            $employee = UserEmployee::where('user_id', '=', $id)->firstOrFail();
+            $employee->status_user = 'deactive';
+            $employee->save();
+            
+            return redirect('/back-admin/user/list-mentor')->withStatus('Berhasil menonaktifkan mentor.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+    public function activeMentor($id)
+    {
+        try {
+            $employee = UserEmployee::where('user_id', '=', $id)->firstOrFail();
+            $employee->status_user = 'active';
+            $employee->save();
+            
+            return redirect('/back-admin/user/list-mentor')->withStatus('Berhasil mengaktifkan mentor.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
 }

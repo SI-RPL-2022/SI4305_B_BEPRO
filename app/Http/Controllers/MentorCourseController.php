@@ -83,6 +83,7 @@ class MentorCourseController extends Controller
             $course->thumbnail_video = $request->thumbnail_video;
             $course->category_id = $request->category;
             $course->slug = \Str::slug($request->course_name);
+            $course->user_id = \Auth::user()->id;
             $course->save();
 
             return redirect('/back-mentor/course/add-course')->withStatus('Berhasil menambah data.');

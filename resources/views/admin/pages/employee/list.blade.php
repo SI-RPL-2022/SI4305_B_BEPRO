@@ -100,6 +100,21 @@
                             </a>
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-bold fs-7 w-125px py-4" data-kt-menu="true">
                                 <div class="menu-item px-3">
+                                    @if ($item->status_user == 'active')
+                                    <form action="{{url('/back-admin/user/'.$item->userID.'/deactive-employee')}}" method="POST" class="inline">
+                                        @method('put')
+                                        @csrf
+                                        <button type="submit" class="btn w-100 menu-link px-3 fs-7 text-center" onclick="return confirm('Yakin Menonaktifkan Akun ?')">Non Aktif</button>
+                                    </form>
+                                    @elseif ($item->status_user == 'deactive')
+                                    <form action="{{url('/back-admin/user/'.$item->userID.'/active-employee')}}" method="POST" class="inline">
+                                        @method('put')
+                                        @csrf
+                                        <button type="submit" class="btn w-100 menu-link px-3 fs-7 text-center" onclick="return confirm('Yakin Mengaktifkan Akun ?')">Aktif</button>
+                                    </form>
+                                    @endif
+                                </div>
+                                <div class="menu-item px-3">
                                     <form action="{{url('/back-admin/user/'.$item->userID.'/reset-employee')}}" method="POST" class="inline">
                                         @method('put')
                                         @csrf

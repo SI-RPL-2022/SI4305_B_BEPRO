@@ -21,6 +21,7 @@ class CreateCoursesTable extends Migration
             $table->string('thumbnail_video');
             $table->integer('category_id', false, true);
             $table->string('slug')->unique();
+            $table->integer('user_id');
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('course_categories')->cascadeOnUpdate()->cascadeOnDelete();

@@ -5,11 +5,13 @@ use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminDivisionPositionController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminCategoryCourseController;
+use App\Http\Controllers\AdminBenefitCourseController;
 use App\Http\Controllers\AdminCourseController;
 
 use App\Http\Controllers\MentorDashboardController;
 use App\Http\Controllers\MentorCategoryCourseController;
 use App\Http\Controllers\MentorCourseController;
+use App\Http\Controllers\MentorBenefitCourseController;
 
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeeCourseController;
@@ -55,6 +57,10 @@ Route::get('/back-admin/user/list-employee', [AdminUserController::class, 'listE
 Route::get('/back-admin/user/add-employee', [AdminUserController::class, 'addEmployee']);
 Route::post('/back-admin/user/store-employee', [AdminUserController::class, 'storeEmployee']);
 Route::put('/back-admin/user/{id}/reset-employee', [AdminUserController::class, 'resetEmployee']);
+Route::put('/back-admin/user/{id}/deactive-employee', [AdminUserController::class, 'deactiveEmployee']);
+Route::put('/back-admin/user/{id}/active-employee', [AdminUserController::class, 'activeEmployee']);
+Route::put('/back-admin/user/{id}/deactive-mentor', [AdminUserController::class, 'deactiveMentor']);
+Route::put('/back-admin/user/{id}/active-mentor', [AdminUserController::class, 'activeMentor']);
 
 Route::get('/back-admin/user/list-mentor', [AdminUserController::class, 'listMentor']);
 Route::get('/back-admin/user/add-mentor', [AdminUserController::class, 'addMentor']);
@@ -67,6 +73,10 @@ Route::post('/back-admin/category-course/store-category-course', [AdminCategoryC
 Route::post('/back-admin/category-course/{id}/edit-category-course', [AdminCategoryCourseController::class, 'edit']);
 Route::put('/back-admin/category-course/{id}/update-category-course', [AdminCategoryCourseController::class, 'update']);
 Route::delete('/back-admin/category-course/{id}/destroy-category-course', [AdminCategoryCourseController::class, 'destroy']);
+
+Route::get('/back-admin/benefit-course/list-benefit-course', [AdminBenefitCourseController::class, 'index']);
+Route::post('/back-admin/benefit-course/store-benefit-course', [AdminBenefitCourseController::class, 'store']);
+Route::delete('/back-admin/benefit-course/{id}/destroy-benefit-course', [AdminBenefitCourseController::class, 'destroy']);
 
 Route::get('/back-admin/course/list-course', [AdminCourseController::class, 'index']);
 Route::get('/back-admin/course/add-course', [AdminCourseController::class, 'add']);
@@ -91,6 +101,10 @@ Route::post('/back-mentor/course/store-course', [MentorCourseController::class, 
 Route::post('/back-mentor/course/{id}/edit-course', [MentorCourseController::class, 'edit']);
 Route::put('/back-mentor/course/{id}/update-course', [MentorCourseController::class, 'update']);
 Route::delete('/back-mentor/course/{id}/destroy-course', [MentorCourseController::class, 'destroy']);
+
+Route::get('/back-mentor/benefit-course/list-benefit-course', [MentorBenefitCourseController::class, 'index']);
+Route::post('/back-mentor/benefit-course/store-benefit-course', [MentorBenefitCourseController::class, 'store']);
+Route::delete('/back-mentor/benefit-course/{id}/destroy-benefit-course', [MentorBenefitCourseController::class, 'destroy']);
 
 
 // employee
