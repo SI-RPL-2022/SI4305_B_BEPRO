@@ -58,7 +58,7 @@
                         <th class="text-center">Deskripsi</th>
                         <th class="text-center">Thumbnail</th>
                         <th class="text-center">Video</th>
-                        <th class="text-center">Nama Kategori</th>
+                        <th class="text-center">Tingkatan</th>
                         <th class="text-center">Created at</th>
                         <th class="text-center">Updated at</th>
                         <th class="text-center">Opsi</th>

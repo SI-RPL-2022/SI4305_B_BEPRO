@@ -38,7 +38,7 @@
                         <div class="fs-6 fw-bold mt-2 mb-3">Keuntungan</div>
                     </div>
                     <div class="col-lg-8 fv-row">
-                        <input type="text" class="form-control form-control-solid @error('benefit') is-invalid @enderror" name="benefit" placeholder="Nama Keuntungan ..." value="{{old('benefit')}}" />
+                        <input type="text" class="form-control form-control-solid @error('benefit') is-invalid @enderror" name="benefit" placeholder="Deskripsi Keuntungan ..." value="{{old('benefit')}}" />
                         @error('benefit')
                             <span class="invalid-feedback" role="alert">
                                 <strong>&nbsp; &nbsp; &nbsp;{{ $message }}</strong>

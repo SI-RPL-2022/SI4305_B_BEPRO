@@ -31,7 +31,7 @@
                     @csrf
                     <div class="card-body border-top p-9">
                         <div class="row mb-6">
-                            <label class="col-lg-4 col-form-label fw-bold fs-6">Avatar</label>
+                            <label class="col-lg-4 col-form-label fw-bold fs-6">Foto Pegawai</label>
                             <div class="col-lg-8">
                                 <div class="image-input image-input-outline" data-kt-image-input="true" style="background-image: url('assets/media/svg/avatars/blank.svg')">
                                     <div class="image-input-wrapper w-125px h-125px" style="background-image: url(assets/media/avatars/300-1.jpg)"></div>
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                         <div class="row mb-6">
-                            <label class="col-lg-4 col-form-label required fw-bold fs-6">Tentang Karyawan</label>
+                            <label class="col-lg-4 col-form-label required fw-bold fs-6">Tentang Mentor</label>
                             <div class="col-lg-8 fv-row">
                                 <input type="text" name="about_me" class="form-control form-control-lg form-control-solid @error('about_me') is-invalid @enderror" placeholder="Lorem ipsum dolor" value="{{old('about_me')}}"/>
                                 @error('about_me')
