@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Course;
+use App\Models\CourseModule;
+use App\Models\CourseModuleContent;
+use App\Models\CourseModuleContentDone;
 use App\Models\CourseCategory;
 use App\Models\CourseBenefit;
 use App\Models\Enroll;
+use App\Models\CourseReview;
 
 class EmployeeCourseController extends Controller
 {
@@ -65,6 +69,295 @@ class EmployeeCourseController extends Controller
             $this->param['getEnroll'] = Enroll::where('user_id', \Auth::user()->id)->get();
             
             return view('employee.pages.course.list', $this->param);
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+
+    public function myCourse()
+    {
+        try{
+            $this->param['getMyCourse'] = \DB::table('enrolls')
+                            ->select('courses.*')
+                            ->join('courses', 'courses.id', 'enrolls.course_id')
+                            ->where('enrolls.user_id', \Auth::user()->id)
+                            ->where('enrolls.status', 'active')
+                            ->get();
+
+            return view('employee.pages.my-course.list', $this->param);
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+
+    public function myCourseDetail($slug)
+    {
+        try{
+            $this->param['getCourse'] = Course::where('slug', $slug)
+                                                ->first(); //getCourse
+            $getCourseID = $this->param['getCourse']->id; //getCourseID
+            $this->param['getCourseModule'] = CourseModule::where('course_id', $getCourseID)
+                                                            ->orderBy('ordinal', 'ASC')
+                                                            ->get(); //getCourseModule
+            $this->param['getCourseModuleContent'] = CourseModuleContent::orderBy('course_module_id', 'ASC')
+                                                                        ->orderBy('ordinal', 'ASC')
+                                                                        ->get(); //getCourseModuleContent
+            $this->param['getBenefit'] = CourseBenefit::where('course_id', $getCourseID)
+                                                        ->orderBy('id', 'ASC')
+                                                        ->get(); //getBenefit
+
+            return view('employee.pages.my-course.detail', $this->param);
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+
+    public function myCourseDetails($slugCourse, $slugModule, $slugContent)
+    {
+        try{
+            $this->param['getCourse'] = Course::where('slug', $slugCourse)
+                                                ->first(); //getCourse
+            $getCourseID = $this->param['getCourse']->id; //getCourseID
+            $getUserLog = \Auth::user()->id;
+            $this->param['getCourseModule'] = CourseModule::where('course_id', $getCourseID)
+                                                            ->orderBy('ordinal', 'ASC')
+                                                            ->get(); //getCourseModule
+            $this->param['getCourseModuleContent'] = CourseModuleContent::orderBy('course_module_id', 'ASC')
+                                                                        ->orderBy('ordinal', 'ASC')
+                                                                        ->get(); //getCourseModuleContent
+            $this->param['getBenefit'] = CourseBenefit::where('course_id', $getCourseID)
+                                                        ->orderBy('id', 'ASC')
+                                                        ->get(); //getBenefit
+
+            $this->param['getCourseModuleDetails'] = CourseModule::where('course_id', $getCourseID)
+                                                                    ->where('slug', $slugModule)
+                                                                    ->first();
+            $getModuleID = $this->param['getCourseModuleDetails']->id;
+            $this->param['getCourseModuleContentDetails'] = CourseModuleContent::where('course_module_id', $getModuleID)
+                                                                    ->where('slug', $slugContent)
+                                                                    ->first();
+            
+            $getContentID = $this->param['getCourseModuleContentDetails']->id;
+            $getDataEnroll = Enroll::where('course_id', $getCourseID)
+                                    ->where('user_id', $getUserLog)
+                                    ->first();
+            $getEnrollID = $getDataEnroll->id;
+
+            $this->param['getDataDone'] = CourseModuleContentDone::where('enroll_id', $getEnrollID)
+                                                    ->where('course_module_content_id', $getContentID)
+                                                    ->first();
+
+            if ($this->param['getDataDone'] == null) {
+                $this->param['getStatus'] = 'Belum Selesai Dilihat';
+            } else {
+                $this->param['getStatus'] = 'Sudah Selesai Dilihat';
+            }
+
+            return view('employee.pages.my-course.details', $this->param);
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+
+    public function rateCourse($slug)
+    {
+        try{
+            $this->param['getCourse'] = Course::where('slug', $slug)
+                                                ->first(); //getCourse
+            $getCourseID = $this->param['getCourse']->id; //getCourseID
+            $this->param['getCourseModule'] = CourseModule::where('course_id', $getCourseID)
+                                                            ->orderBy('ordinal', 'ASC')
+                                                            ->get(); //getCourseModule
+            $this->param['getCourseModuleContent'] = CourseModuleContent::orderBy('course_module_id', 'ASC')
+                                                                        ->orderBy('ordinal', 'ASC')
+                                                                        ->get(); //getCourseModuleContent
+            $this->param['getBenefit'] = CourseBenefit::where('course_id', $getCourseID)
+                                                        ->orderBy('id', 'ASC')
+                                                        ->get(); //getBenefit
+
+            return view('employee.pages.my-course.rating-feedback', $this->param);
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+
+    public function rateCourseSend($slug, Request $request)
+    {
+        $this->validate($request, 
+            [
+                'feedback' => 'required|min:4',
+                'rating' => 'required',
+            ],
+            [
+                'required' => ':attribute harus diisi.',
+                'feedback.min' => 'Minimal panjang karakter 4.',
+            ],
+            [
+                'feedback' => 'Pesan / feedback',
+                'rating' => 'Rating',
+            ],
+        );
+        try{
+            $this->param['getCourse'] = Course::where('slug', $slug)
+                                                ->first(); //getCourse
+            $getCourseID = $this->param['getCourse']->id; //getCourseID
+            $getUserLog = \Auth::user()->id;
+
+            $cReview = new CourseReview();
+            $cReview->user_id = $getUserLog;
+            $cReview->course_id = $getCourseID;
+            $cReview->rating = $request->rating;
+            $cReview->feedback = $request->feedback;
+            $cReview->save();
+
+            
+            return redirect()->back()->withStatus('Berhasil Memberi Rating dan Feedback.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+
+    public function markAsDone($slugCourse, $slugModule, $slugContent)
+    {
+        try{
+            $getUserLog = \Auth::user()->id;
+            $this->param['getCourse'] = Course::where('slug', $slugCourse)
+                                                ->first(); //getCourse
+            $getCourseID = $this->param['getCourse']->id; //getCourseID
+
+            $this->param['getCourseModule'] = CourseModule::where('course_id', $getCourseID)
+                                                            ->orderBy('ordinal', 'ASC')
+                                                            ->get(); //getCourseModule
+            $this->param['getCourseModuleContent'] = CourseModuleContent::orderBy('course_module_id', 'ASC')
+                                                                        ->orderBy('ordinal', 'ASC')
+                                                                        ->get(); //getCourseModuleContent
+            $this->param['getBenefit'] = CourseBenefit::where('course_id', $getCourseID)
+                                                        ->orderBy('id', 'ASC')
+                                                        ->get(); //getBenefit
+
+            $this->param['getCourseModuleDetails'] = CourseModule::where('course_id', $getCourseID)
+                                                                    ->where('slug', $slugModule)
+                                                                    ->first();
+            $getModuleID = $this->param['getCourseModuleDetails']->id;
+            
+            $this->param['getCourseModuleContentDetails'] = CourseModuleContent::where('course_module_id', $getModuleID)
+                                                                    ->where('slug', $slugContent)
+                                                                    ->first();
+            $getContentID = $this->param['getCourseModuleContentDetails']->id;
+
+            $getDataEnroll = Enroll::where('course_id', $getCourseID)
+                                    ->where('user_id', $getUserLog)
+                                    ->first();
+            $getEnrollID = $getDataEnroll->id;
+
+            $getDataDone = CourseModuleContentDone::where('enroll_id', $getEnrollID)
+                                                    ->where('course_module_content_id', $getContentID)
+                                                    ->first();
+            if ($getDataDone == null) {
+                $cmcDone = new CourseModuleContentDone();
+                $cmcDone->enroll_id = $getEnrollID;
+                $cmcDone->course_module_content_id = $getContentID;
+                $cmcDone->save();
+            } else {
+                $cmcDone = CourseModuleContentDone::find($getDataDone->id);
+                $cmcDone->enroll_id = $getEnrollID;
+                $cmcDone->course_module_content_id = $getContentID;
+                $cmcDone->save();
+            }
+
+            return redirect()->back()->withStatus('Berhasil Menandai Selesai.');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+
+    public function uploadAssigment($slugCourse, $slugModule, $slugContent, Request $request)
+    {
+        $this->validate($request, 
+            [
+                'pdf_file' => 'required|min:4',
+            ],
+            [
+                'required' => ':attribute harus diisi.',
+            ],
+            [
+                'pdf_file' => 'Assigment',
+            ],
+        );
+        try{
+            $date = date('H-i-s');
+            $random = \Str::random(5);
+            $getUserLog = \Auth::user()->id;
+
+            $this->param['getCourse'] = Course::where('slug', $slugCourse)
+                                                ->first(); //getCourse
+            $getCourseID = $this->param['getCourse']->id; //getCourseID
+
+            $this->param['getCourseModule'] = CourseModule::where('course_id', $getCourseID)
+                                                            ->orderBy('ordinal', 'ASC')
+                                                            ->get(); //getCourseModule
+            $this->param['getCourseModuleContent'] = CourseModuleContent::orderBy('course_module_id', 'ASC')
+                                                                        ->orderBy('ordinal', 'ASC')
+                                                                        ->get(); //getCourseModuleContent
+            $this->param['getBenefit'] = CourseBenefit::where('course_id', $getCourseID)
+                                                        ->orderBy('id', 'ASC')
+                                                        ->get(); //getBenefit
+
+            $this->param['getCourseModuleDetails'] = CourseModule::where('course_id', $getCourseID)
+                                                                    ->where('slug', $slugModule)
+                                                                    ->first();
+            $getModuleID = $this->param['getCourseModuleDetails']->id;
+            
+            $this->param['getCourseModuleContentDetails'] = CourseModuleContent::where('course_module_id', $getModuleID)
+                                                                    ->where('slug', $slugContent)
+                                                                    ->first();
+            $getContentID = $this->param['getCourseModuleContentDetails']->id;
+
+            $getDataEnroll = Enroll::where('course_id', $getCourseID)
+                                    ->where('user_id', $getUserLog)
+                                    ->first();
+            $getEnrollID = $getDataEnroll->id;
+
+            $getDataDone = CourseModuleContentDone::where('enroll_id', $getEnrollID)
+                                                    ->where('course_module_content_id', $getContentID)
+                                                    ->first();
+            if ($getDataDone == null) {
+                $cmcDone = new CourseModuleContentDone();
+                $cmcDone->enroll_id = $getEnrollID;
+                $cmcDone->course_module_content_id = $getContentID;
+
+                if ($request->file('pdf_file')) {
+                    $request->file('pdf_file')->move('image/upload/course/user-upload/pdf-course-module-content', $getUserLog.\Auth::user()->name.$date.$random.$request->file('pdf_file')->getClientOriginalName());
+                    $cmcDone->assigment = $date.$random.$request->file('pdf_file')->getClientOriginalName();
+                }
+
+                $cmcDone->save();
+            } else {
+                $cmcDone = CourseModuleContentDone::find($getDataDone->id);
+                if ($request->file('pdf_file')) {
+                    $request->file('pdf_file')->move('image/upload/course/user-upload/pdf-course-module-content', $getUserLog.\Auth::user()->name.$date.$random.$request->file('pdf_file')->getClientOriginalName());
+                    $cmcDone->assigment = $date.$random.$request->file('pdf_file')->getClientOriginalName();
+                }
+                $cmcDone->save();
+            }
+
+            return redirect()->back()->withStatus('Berhasil Upload Assignment.');
+
         } catch (\Exception $e) {
             return redirect()->back()->withError($e->getMessage());
         } catch (\Illuminate\Database\QueryException $e) {
