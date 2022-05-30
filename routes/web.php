@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminBenefitCourseController;
 use App\Http\Controllers\AdminCourseController;
 use App\Http\Controllers\AdminCourseModuleController;
 use App\Http\Controllers\AdminCourseModuleContentController;
+use App\Http\Controllers\AdminCourseModuleQuizController;
 
 use App\Http\Controllers\MentorDashboardController;
 use App\Http\Controllers\MentorCategoryCourseController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\MentorCourseController;
 use App\Http\Controllers\MentorBenefitCourseController;
 use App\Http\Controllers\MentorCourseModuleController;
 use App\Http\Controllers\MentorCourseModuleContentController;
+use App\Http\Controllers\MentorCourseModuleQuizController;
 
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeeCourseController;
@@ -103,6 +105,12 @@ Route::post('/back-admin/course-module-content/{id}/edit-course-module-content',
 Route::put('/back-admin/course-module-content/{id}/update-course-module-content', [AdminCourseModuleContentController::class, 'update']);
 Route::delete('/back-admin/course-module-content/{id}/destroy-course-module-content', [AdminCourseModuleContentController::class, 'destroy']);
 
+Route::get('/back-admin/course-module-quiz/list-course-module-quiz', [AdminCourseModuleQuizController::class, 'index']);
+Route::get('/back-admin/course-module-quiz/add-course-module-quiz', [AdminCourseModuleQuizController::class, 'add']);
+Route::post('/back-admin/course-module-quiz/store-course-module-quiz', [AdminCourseModuleQuizController::class, 'store']);
+Route::post('/back-admin/course-module-quiz/{id}/edit-course-module-quiz', [AdminCourseModuleQuizController::class, 'edit']);
+Route::put('/back-admin/course-module-quiz/{id}/update-course-module-quiz', [AdminCourseModuleQuizController::class, 'update']);
+Route::delete('/back-admin/course-module-quiz/{id}/destroy-course-module-quiz', [AdminCourseModuleQuizController::class, 'destroy']);
 
 // mentor
 Route::get('/back-mentor/dashboard', [MentorDashboardController::class, 'index']);
@@ -138,6 +146,12 @@ Route::post('/back-mentor/course-module-content/{id}/edit-course-module-content'
 Route::put('/back-mentor/course-module-content/{id}/update-course-module-content', [MentorCourseModuleContentController::class, 'update']);
 Route::delete('/back-mentor/course-module-content/{id}/destroy-course-module-content', [MentorCourseModuleContentController::class, 'destroy']);
 
+Route::get('/back-mentor/course-module-quiz/list-course-module-quiz', [MentorCourseModuleQuizController::class, 'index']);
+Route::get('/back-mentor/course-module-quiz/add-course-module-quiz', [MentorCourseModuleQuizController::class, 'add']);
+Route::post('/back-mentor/course-module-quiz/store-course-module-quiz', [MentorCourseModuleQuizController::class, 'store']);
+Route::post('/back-mentor/course-module-quiz/{id}/edit-course-module-quiz', [MentorCourseModuleQuizController::class, 'edit']);
+Route::put('/back-mentor/course-module-quiz/{id}/update-course-module-quiz', [MentorCourseModuleQuizController::class, 'update']);
+Route::delete('/back-mentor/course-module-quiz/{id}/destroy-course-module-quiz', [MentorCourseModuleQuizController::class, 'destroy']);
 
 // employee
 Route::get('/back-employee/dashboard', [EmployeeDashboardController::class, 'index']);
@@ -147,6 +161,8 @@ Route::get('/back-employee/my-course/list-course', [EmployeeCourseController::cl
 Route::get('/back-employee/my-course/{slug}/persiapan-course', [EmployeeCourseController::class, 'myCourseDetail']);
 Route::get('/back-employee/my-course/{slug}/rating-feedback', [EmployeeCourseController::class, 'rateCourse']);
 Route::post('/back-employee/my-course/{slug}/rating-feedback/send', [EmployeeCourseController::class, 'rateCourseSend']);
+Route::get('/back-employee/my-course/{slugCourse}/{slugModule}/quiz', [EmployeeCourseController::class, 'quiz']);
+Route::post('/back-employee/my-course/quiz-store', [EmployeeCourseController::class, 'quizStore']);
 Route::get('/back-employee/my-course/{slugCourse}/{slugModule}/{slugContent}', [EmployeeCourseController::class, 'myCourseDetails']);
 Route::post('/back-employee/my-course/{slugCourse}/{slugModule}/{slugContent}/mark-done', [EmployeeCourseController::class, 'markAsDone']);
 Route::post('/back-employee/my-course/{slugCourse}/{slugModule}/{slugContent}/assignment', [EmployeeCourseController::class, 'uploadAssigment']);
