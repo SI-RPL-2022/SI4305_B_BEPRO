@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\CourseModule;
 use App\Models\CourseModuleContent;
+use App\Models\CourseModuleQuiz;
 use App\Models\CourseModuleContentDone;
 use App\Models\CourseCategory;
 use App\Models\CourseBenefit;
 use App\Models\Enroll;
 use App\Models\CourseReview;
+use App\Models\ReportQuiz;
 
 class EmployeeCourseController extends Controller
 {
@@ -357,6 +359,81 @@ class EmployeeCourseController extends Controller
             }
 
             return redirect()->back()->withStatus('Berhasil Upload Assignment.');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+
+    public function quiz($slugCourse, $slugModule)
+    {
+        try {
+            $this->param['getCourse'] = Course::where('slug', $slugCourse)
+                                                ->first(); //getCourse
+            $getCourseID = $this->param['getCourse']->id; //getCourseID
+            $getUserLog = \Auth::user()->id;
+            $this->param['getCourseModule'] = CourseModule::where('course_id', $getCourseID)
+                                                            ->orderBy('ordinal', 'ASC')
+                                                            ->get(); //getCourseModule
+            $this->param['getCourseModuleContent'] = CourseModuleContent::orderBy('course_module_id', 'ASC')
+                                                                        ->orderBy('ordinal', 'ASC')
+                                                                        ->get(); //getCourseModuleContent
+            $this->param['getBenefit'] = CourseBenefit::where('course_id', $getCourseID)
+                                                        ->orderBy('id', 'ASC')
+                                                        ->get(); //getBenefit
+
+            $this->param['getCourseModuleDetails'] = CourseModule::where('course_id', $getCourseID)
+                                                                    ->where('slug', $slugModule)
+                                                                    ->first();
+            $getModuleID = $this->param['getCourseModuleDetails']->id;
+
+            $this->param['getQuestion'] = CourseModuleQuiz::where('course_module_id', $getModuleID)
+                                                            ->orderBy('id', 'ASC')
+                                                            ->get();
+
+            return view('employee.pages.my-course.quiz', $this->param);
+        } catch (\Exception $e) {
+            return redirect()->back()->withError($e->getMessage());
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->back()->withError('Terjadi kesalahan pada database', $e->getMessage());
+        }
+    }
+    public function quizStore(Request $request){
+        try {
+            // dd($request->all());
+            $answer = $request->answer;
+            $questionID = $request->questionID;
+
+            $countData = count($questionID);
+            $data = [];
+            // $collection = collect($request->except(['_token']));
+            for ($i=0; $i < $countData; $i++) { 
+                // ReportQuiz::create([
+                //     'course_module_quiz_id' => $questionID[$i],
+                //     'answer' => $answer[$i],
+                //     'status' => 'not_corrected'
+                // ]);
+                $data[] = [
+                    'course_module_quiz_id' => $questionID[$i],
+                    'answer' => $answer[$i],
+                    'status' => 'not_corrected'
+                ];
+            }
+
+            ReportQuiz::insert($data);
+
+            // foreach($questionID as $items) {
+            //     $data = [
+            //         'course_module_quiz_id' => $items,
+            //         'answer' => $answer,
+            //         'status' => 'not_corrected'
+            //     ];
+            // }
+            // ReportQuiz::insert($data);
+
+            return redirect()->back()->withStatus('Berhasil Menyelesaikan Quiz.');
 
         } catch (\Exception $e) {
             return redirect()->back()->withError($e->getMessage());

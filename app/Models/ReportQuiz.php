@@ -9,6 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 class ReportQuiz extends Model
 {
     use HasFactory, HasRoles;
-    protected $table = 'reqport_quizes';
+    protected $table = 'report_quizes';
     protected $primaryKey = 'id';
+    // protected $fillable = ['course_module_quiz_id'];
 }

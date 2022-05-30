@@ -70,21 +70,20 @@
                         </a>
                     </div>
                     @endif
-                    @endforeach
-                    <div class="menu-item">
-                        <a class="menu-link @if (Request::Segment(4) == $itemCourseModule->slug && Request::Segment(5) == 'quiz') active @endif" href="{{url('/back-employee/my-course/'.$getCourse->slug.'/'.$itemCourseModule->slug.'/quiz')}}">
-                        {{-- <a class="menu-link @if (Request::Segment(4) == $itemCourseModule->slug && Request::Segment(5) == 'quiz') active @endif" href="{{url('/back-employee/my-course/'.$getCourse->slug.'/'.$itemCourseModule->slug.'/quiz')}}"> --}}
-                            <span class="menu-icon">
-                                <span class="svg-icon svg-icon-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M16.95 18.9688C16.75 18.9688 16.55 18.8688 16.35 18.7688C15.85 18.4688 15.75 17.8688 16.05 17.3688L19.65 11.9688L16.05 6.56876C15.75 6.06876 15.85 5.46873 16.35 5.16873C16.85 4.86873 17.45 4.96878 17.75 5.46878L21.75 11.4688C21.95 11.7688 21.95 12.2688 21.75 12.5688L17.75 18.5688C17.55 18.7688 17.25 18.9688 16.95 18.9688ZM7.55001 18.7688C8.05001 18.4688 8.15 17.8688 7.85 17.3688L4.25001 11.9688L7.85 6.56876C8.15 6.06876 8.05001 5.46873 7.55001 5.16873C7.05001 4.86873 6.45 4.96878 6.15 5.46878L2.15 11.4688C1.95 11.7688 1.95 12.2688 2.15 12.5688L6.15 18.5688C6.35 18.8688 6.65 18.9688 6.95 18.9688C7.15 18.9688 7.35001 18.8688 7.55001 18.7688Z" fill="black" />
-                                        <path opacity="0.3" d="M10.45 18.9687C10.35 18.9687 10.25 18.9687 10.25 18.9687C9.75 18.8687 9.35 18.2688 9.55 17.7688L12.55 5.76878C12.65 5.26878 13.25 4.8687 13.75 5.0687C14.25 5.1687 14.65 5.76878 14.45 6.26878L11.45 18.2688C11.35 18.6688 10.85 18.9687 10.45 18.9687Z" fill="black" />
-                                    </svg>
-                                </span>
+                @endforeach
+                <div class="menu-item">
+                    <a class="menu-link @if (Request::Segment(4) == $itemCourseModule->slug && Request::Segment(5) == 'quiz') active @endif" href="{{url('/back-employee/my-course/'.$getCourse->slug.'/'.$itemCourseModule->slug.'/quiz')}}">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M16.95 18.9688C16.75 18.9688 16.55 18.8688 16.35 18.7688C15.85 18.4688 15.75 17.8688 16.05 17.3688L19.65 11.9688L16.05 6.56876C15.75 6.06876 15.85 5.46873 16.35 5.16873C16.85 4.86873 17.45 4.96878 17.75 5.46878L21.75 11.4688C21.95 11.7688 21.95 12.2688 21.75 12.5688L17.75 18.5688C17.55 18.7688 17.25 18.9688 16.95 18.9688ZM7.55001 18.7688C8.05001 18.4688 8.15 17.8688 7.85 17.3688L4.25001 11.9688L7.85 6.56876C8.15 6.06876 8.05001 5.46873 7.55001 5.16873C7.05001 4.86873 6.45 4.96878 6.15 5.46878L2.15 11.4688C1.95 11.7688 1.95 12.2688 2.15 12.5688L6.15 18.5688C6.35 18.8688 6.65 18.9688 6.95 18.9688C7.15 18.9688 7.35001 18.8688 7.55001 18.7688Z" fill="black" />
+                                    <path opacity="0.3" d="M10.45 18.9687C10.35 18.9687 10.25 18.9687 10.25 18.9687C9.75 18.8687 9.35 18.2688 9.55 17.7688L12.55 5.76878C12.65 5.26878 13.25 4.8687 13.75 5.0687C14.25 5.1687 14.65 5.76878 14.45 6.26878L11.45 18.2688C11.35 18.6688 10.85 18.9687 10.45 18.9687Z" fill="black" />
+                                </svg>
                             </span>
-                            <span class="menu-title">Quiz {{$itemCourseModule->module_name}}</span>
-                        </a>
-                    </div>
+                        </span>
+                        <span class="menu-title">Quiz {{$itemCourseModule->module_name}}</span>
+                    </a>
+                </div>
                 @endforeach
 
                 <div class="menu-item">
@@ -115,8 +114,14 @@
 <div class="toolbar" id="kt_toolbar">
     <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
         <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-            <h1 class="d-flex text-dark fw-bolder fs-5 align-items-center my-1"><span class="text-muted fw-normal">{{$getCourse->course_name}} - Persiapan Course - </span>&nbsp;Tentang Materi</h1>
+            <h1 class="d-flex text-dark fw-bolder fs-5 align-items-center my-1"><span class="text-muted fw-normal">{{$getCourse->course_name}} - {{$getCourseModuleDetails->module_name}} - </span>&nbsp;Quiz</h1>
         </div>
+        {{-- <div class="d-flex align-items-center gap-2 gap-lg-3">
+            <form action="{{url('/back-employee/my-course/'.$getCourse->slug.'/'.$getCourseModuleDetails->slug.'/quiz/mark-done')}}" method="post">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-primary">Tandai Sudah Dilihat</button>
+            </form>
+        </div> --}}
     </div>
 </div>
 @endsection
@@ -128,36 +133,59 @@
             <div>
                 <div class="mb-10">
                     <div class="text-center mb-15">
-                        <h3 class="fs-2hx text-dark mb-5">{{$getCourse->course_name}}</h3>
-                        <h3 class="fs-1hx text-dark mb-5">Tentang Materi</h3>
+                        <h3 class="fs-2hx text-dark mb-5">Quiz</h3>
                     </div>
-                    <div class="overlay">
-                        <iframe class="w-100" height="600" src="{{$getCourse->thumbnail_video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="fs-5 fw-bold text-gray-600">
-                    <p>{{$getCourse->description}}</p>
-                </div>
-                <div class="row mt-12">
-                    <div class="col-md-12 pe-md-10 mb-10 mb-md-0">
-                        <h2 class="text-gray-800 fw-bolder mb-4">Benefit</h2>
-                        @foreach ($getBenefit as $itemBenefit)
-                        <div class="m-0">
-                            <div class="d-flex align-items-center collapsible py-3 toggle mb-0" data-bs-toggle="collapse" data-bs-target="#kt_job_4_1">
-                                <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
-                                    <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="black" />
-                                            <rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="black" />
-                                            <rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="black" />
-                                        </svg>
-                                    </span>
+                    {{-- <div class="overlay">
+                        <iframe class="w-100" height="600" src="{{$getCourseModuleContentDetails->video_link}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div> --}}
+                    <div id="kt_account_settings_profile_details" class="collapse show">
+                        <form id="kt_account_profile_details_form" class="form" method="POST" action="{{url('/back-employee/my-course/quiz-store')}}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="card-body border-top p-9">
+                                @foreach ($getQuestion as $itemQuestion)    
+                                <div class="row mb-6">
+                                    <label class="col-lg-2 col-form-label fw-bold fs-6">Pertanyaan - {{$loop->iteration}}</label>
+                                    <div class="col-lg-10 fv-row">
+                                        <label for="" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0">{{$itemQuestion->question}}</label>
+                                    </div>
                                 </div>
-                                <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">{{$itemBenefit->benefit}}</h4>
+                                {{-- <div class="row mb-6">
+                                    <label class="col-lg-2 col-form-label fw-bold fs-6">Jawaban - {{$loop->iteration}}</label>
+                                    <div class="col-lg-10 fv-row">
+                                        <input type="text" name="answer-{{$itemQuestion->id}}" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('answer-{{$itemQuestion->id}}') is-invalid @enderror" placeholder="Jawaban" />
+                                        @error('answer-{{$itemQuestion->id}}')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>&nbsp; &nbsp; &nbsp;{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-10 fv-row">
+                                    <input type="hidden" name="questionID[]" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('questionID') is-invalid @enderror" placeholder="Jawaban" value="{{$itemQuestion->id}}" />
+                                    @error('questionID')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>&nbsp; &nbsp; &nbsp;{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="row mb-6">
+                                    <label class="col-lg-2 col-form-label fw-bold fs-6">Jawaban - {{$loop->iteration}}</label>
+                                    <div class="col-lg-10 fv-row">
+                                        <input type="text" name="answer[]" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('answer') is-invalid @enderror" placeholder="Jawaban" />
+                                        @error('answer')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>&nbsp; &nbsp; &nbsp;{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
-                            <div class="separator separator-dashed"></div>
-                        </div>
-                        @endforeach
+                            <div class="card-footer d-flex justify-content-end py-6 px-9">
+                                <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
+                                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save Changes</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

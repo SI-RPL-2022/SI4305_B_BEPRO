@@ -2,9 +2,30 @@
 
 @section('extraCSS')
     <link href="{{asset('vendor/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+
+    {{-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/css/star-rating.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/js/star-rating.min.js"></script> --}}
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/js/star-rating.js" type="text/javascript"></script>
+    
     <style>
         .custom-img {
             object-fit: cover;
+        }
+        .glyphicon-star:before{
+            content:"\e006";
+            font-size: 20pt;
+        }
+        .glyphicon-star-empty:before{
+            content:"\e007";
+            font-size: 20pt;
         }
     </style>
 @endsection
@@ -70,21 +91,20 @@
                         </a>
                     </div>
                     @endif
-                    @endforeach
-                    <div class="menu-item">
-                        <a class="menu-link @if (Request::Segment(4) == $itemCourseModule->slug && Request::Segment(5) == 'quiz') active @endif" href="{{url('/back-employee/my-course/'.$getCourse->slug.'/'.$itemCourseModule->slug.'/quiz')}}">
-                        {{-- <a class="menu-link @if (Request::Segment(4) == $itemCourseModule->slug && Request::Segment(5) == 'quiz') active @endif" href="{{url('/back-employee/my-course/'.$getCourse->slug.'/'.$itemCourseModule->slug.'/quiz')}}"> --}}
-                            <span class="menu-icon">
-                                <span class="svg-icon svg-icon-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M16.95 18.9688C16.75 18.9688 16.55 18.8688 16.35 18.7688C15.85 18.4688 15.75 17.8688 16.05 17.3688L19.65 11.9688L16.05 6.56876C15.75 6.06876 15.85 5.46873 16.35 5.16873C16.85 4.86873 17.45 4.96878 17.75 5.46878L21.75 11.4688C21.95 11.7688 21.95 12.2688 21.75 12.5688L17.75 18.5688C17.55 18.7688 17.25 18.9688 16.95 18.9688ZM7.55001 18.7688C8.05001 18.4688 8.15 17.8688 7.85 17.3688L4.25001 11.9688L7.85 6.56876C8.15 6.06876 8.05001 5.46873 7.55001 5.16873C7.05001 4.86873 6.45 4.96878 6.15 5.46878L2.15 11.4688C1.95 11.7688 1.95 12.2688 2.15 12.5688L6.15 18.5688C6.35 18.8688 6.65 18.9688 6.95 18.9688C7.15 18.9688 7.35001 18.8688 7.55001 18.7688Z" fill="black" />
-                                        <path opacity="0.3" d="M10.45 18.9687C10.35 18.9687 10.25 18.9687 10.25 18.9687C9.75 18.8687 9.35 18.2688 9.55 17.7688L12.55 5.76878C12.65 5.26878 13.25 4.8687 13.75 5.0687C14.25 5.1687 14.65 5.76878 14.45 6.26878L11.45 18.2688C11.35 18.6688 10.85 18.9687 10.45 18.9687Z" fill="black" />
-                                    </svg>
-                                </span>
+                @endforeach
+                <div class="menu-item">
+                    <a class="menu-link @if (Request::Segment(4) == $itemCourseModule->slug && Request::Segment(5) == 'quiz') active @endif" href="{{url('/back-employee/my-course/'.$getCourse->slug.'/'.$itemCourseModule->slug.'/quiz')}}">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M16.95 18.9688C16.75 18.9688 16.55 18.8688 16.35 18.7688C15.85 18.4688 15.75 17.8688 16.05 17.3688L19.65 11.9688L16.05 6.56876C15.75 6.06876 15.85 5.46873 16.35 5.16873C16.85 4.86873 17.45 4.96878 17.75 5.46878L21.75 11.4688C21.95 11.7688 21.95 12.2688 21.75 12.5688L17.75 18.5688C17.55 18.7688 17.25 18.9688 16.95 18.9688ZM7.55001 18.7688C8.05001 18.4688 8.15 17.8688 7.85 17.3688L4.25001 11.9688L7.85 6.56876C8.15 6.06876 8.05001 5.46873 7.55001 5.16873C7.05001 4.86873 6.45 4.96878 6.15 5.46878L2.15 11.4688C1.95 11.7688 1.95 12.2688 2.15 12.5688L6.15 18.5688C6.35 18.8688 6.65 18.9688 6.95 18.9688C7.15 18.9688 7.35001 18.8688 7.55001 18.7688Z" fill="black" />
+                                    <path opacity="0.3" d="M10.45 18.9687C10.35 18.9687 10.25 18.9687 10.25 18.9687C9.75 18.8687 9.35 18.2688 9.55 17.7688L12.55 5.76878C12.65 5.26878 13.25 4.8687 13.75 5.0687C14.25 5.1687 14.65 5.76878 14.45 6.26878L11.45 18.2688C11.35 18.6688 10.85 18.9687 10.45 18.9687Z" fill="black" />
+                                </svg>
                             </span>
-                            <span class="menu-title">Quiz {{$itemCourseModule->module_name}}</span>
-                        </a>
-                    </div>
+                        </span>
+                        <span class="menu-title">Quiz {{$itemCourseModule->module_name}}</span>
+                    </a>
+                </div>
                 @endforeach
 
                 <div class="menu-item">
@@ -129,35 +149,40 @@
                 <div class="mb-10">
                     <div class="text-center mb-15">
                         <h3 class="fs-2hx text-dark mb-5">{{$getCourse->course_name}}</h3>
-                        <h3 class="fs-1hx text-dark mb-5">Tentang Materi</h3>
-                    </div>
-                    <div class="overlay">
-                        <iframe class="w-100" height="600" src="{{$getCourse->thumbnail_video}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <h3 class="fs-1hx text-dark mb-5">Rating & Feedback</h3>
                     </div>
                 </div>
-                <div class="fs-5 fw-bold text-gray-600">
-                    <p>{{$getCourse->description}}</p>
-                </div>
-                <div class="row mt-12">
-                    <div class="col-md-12 pe-md-10 mb-10 mb-md-0">
-                        <h2 class="text-gray-800 fw-bolder mb-4">Benefit</h2>
-                        @foreach ($getBenefit as $itemBenefit)
-                        <div class="m-0">
-                            <div class="d-flex align-items-center collapsible py-3 toggle mb-0" data-bs-toggle="collapse" data-bs-target="#kt_job_4_1">
-                                <div class="btn btn-sm btn-icon mw-20px btn-active-color-primary me-5">
-                                    <span class="svg-icon toggle-on svg-icon-primary svg-icon-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                            <rect opacity="0.3" x="2" y="2" width="20" height="20" rx="5" fill="black" />
-                                            <rect x="10.8891" y="17.8033" width="12" height="2" rx="1" transform="rotate(-90 10.8891 17.8033)" fill="black" />
-                                            <rect x="6.01041" y="10.9247" width="12" height="2" rx="1" fill="black" />
-                                        </svg>
-                                    </span>
+                <div class="row align-items-center">
+                    <div class="col-md-6 pe-lg-10">
+                        <form action="{{url('/back-employee/my-course/'.$getCourse->slug.'/rating-feedback/send')}}" class="form" method="POST" id="kt_contact_form">
+                            @csrf
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <label class="fs-5 fw-bold mb-2">Rate</label>
+                                    <input id="ratinginput" name="rating" class="rating rating-loading @error('rating') is-invalid @enderror" data-min="0" data-max="5" data-step="1">
+                                    @error('rating')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>&nbsp; &nbsp; &nbsp;{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
-                                <h4 class="text-gray-700 fw-bolder cursor-pointer mb-0">{{$itemBenefit->benefit}}</h4>
                             </div>
-                            <div class="separator separator-dashed"></div>
-                        </div>
-                        @endforeach
+                            <div class="d-flex flex-column mb-10 fv-row">
+                                <label class="fs-6 fw-bold mb-2">Saran / Masukan</label>
+                                <textarea class="form-control form-control-solid @error('feedback') is-invalid @enderror" rows="6" name="feedback" placeholder=""></textarea>
+                                @error('feedback')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>&nbsp; &nbsp; &nbsp;{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="kt_contact_submit_button">
+                                <span class="indicator-label">Kirim Pesan</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-6 ps-lg-10">
+                        <img src="{{asset('image/upload/course/thumbnail')}}/{{$getCourse->thumbnail_image}}" class="w-100">
                     </div>
                 </div>
             </div>
@@ -176,4 +201,8 @@
 <script src="{{asset('vendor/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
 <script src="{{asset('vendor/js/custom/utilities/modals/create-app.js')}}"></script>
 <script src="{{asset('vendor/js/custom/utilities/modals/users-search.js')}}"></script>
+
+<script>
+    $("#ratinginput").rating();
+</script>
 @endsection
