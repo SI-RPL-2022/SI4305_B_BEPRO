@@ -247,7 +247,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div data-kt-menu-trigger="click" class="menu-item @if (Request::Segment(2) == 'course-module-content') here show @endif menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -281,11 +280,39 @@
                     </div>
                 </div>
                 
-                {{-- <div class="menu-item">
-                    <div class="menu-content pt-8 pb-0">
-                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Feedback</span>
+                <div data-kt-menu-trigger="click" class="menu-item @if (Request::Segment(2) == 'course-module-quiz') here show @endif menu-accordion">
+                    <span class="menu-link">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path opacity="0.3" d="M21 22H14C13.4 22 13 21.6 13 21V3C13 2.4 13.4 2 14 2H21C21.6 2 22 2.4 22 3V21C22 21.6 21.6 22 21 22Z" fill="black" />
+                                    <path d="M10 22H3C2.4 22 2 21.6 2 21V3C2 2.4 2.4 2 3 2H10C10.6 2 11 2.4 11 3V21C11 21.6 10.6 22 10 22Z" fill="black" />
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="menu-title">Course Modul Quiz</span>
+                        <span class="menu-arrow"></span>
+                    </span>
+                    <div class="menu-sub menu-sub-accordion @if (Request::Segment(2) == 'course-module-quiz') menu-active-bg @endif">
+                        <div class="menu-item">
+                            <a class="menu-link @if (Request::Segment(3) == 'list-course-module-quiz') active @endif" href="{{url('/back-admin/course-module-quiz/list-course-module-quiz')}}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">List Modul Quiz</span>
+                            </a>
+                        </div>
+                        <div class="menu-item">
+                            <a class="menu-link  @if (Request::Segment(3) == 'add-course-module-quiz') active @endif" href="{{url('/back-admin/course-module-quiz/add-course-module-quiz')}}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Tambah Modul Quiz</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
+                {{-- 
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
