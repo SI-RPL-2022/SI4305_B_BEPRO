@@ -9,6 +9,6 @@ use Spatie\Permission\Traits\HasRoles;
 class CourseModuleContentDone extends Model
 {
     use HasFactory, HasRoles;
-    protected $table = 'course_module_content_dones';
+    protected $table = 'course_module_content_finsishs';
     protected $primaryKey = 'id';
 }

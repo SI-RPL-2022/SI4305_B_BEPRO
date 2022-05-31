@@ -35,7 +35,7 @@
                                         <span class="menu-bullet">
                                             <span class="bullet bullet-dot"></span>
                                         </span>
-                                        <span class="menu-title">Dashboard Admin</span>
+                                        <span class="menu-title">Dashboard Employee</span>
                                     </a>
                                 </div>
                             </div>
