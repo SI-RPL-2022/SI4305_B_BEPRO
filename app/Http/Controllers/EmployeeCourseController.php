@@ -87,6 +87,23 @@ class EmployeeCourseController extends Controller
                             ->where('enrolls.user_id', \Auth::user()->id)
                             ->where('enrolls.status', 'active')
                             ->get();
+            
+            $this->param['getTotalContent'] = \DB::table('course_module_contents')
+                                                ->select(array('courses.id AS course_id', 'courses.course_name AS course_name', \DB::raw('COUNT(course_module_contents.id) AS total_content')))
+                                                ->join('course_modules', 'course_module_contents.course_module_id', 'course_modules.id')
+                                                ->join('courses', 'course_modules.course_id', 'courses.id')
+                                                ->groupBy('courses.course_name')
+                                                ->get();
+            $this->param['getTotalContentDone'] = \DB::table('course_module_content_finsishs')
+                                                ->select(array('courses.id AS course_id', 'courses.course_name AS course_name', \DB::raw('COUNT(course_module_content_finsishs.course_module_content_id) AS total_content')))
+                                                ->join('enrolls', 'course_module_content_finsishs.enroll_id', 'enrolls.id')
+                                                ->join('courses', 'enrolls.course_id', 'courses.id')
+                                                ->where('enrolls.user_id', \Auth::user()->id)
+                                                ->groupBy('courses.course_name')
+                                                ->get();
+
+            // dd($this->param['getTotalContent']);
+            // dd($this->param['getTotalContentDone']);
 
             return view('employee.pages.my-course.list', $this->param);
         } catch (\Exception $e) {
@@ -161,6 +178,12 @@ class EmployeeCourseController extends Controller
                 $this->param['getStatus'] = 'Sudah Selesai Dilihat';
             }
 
+            if ($this->param['getDataDone'] == null or $this->param['getDataDone']->assigment == null) {
+                $this->param['getStatuses'] = 'Belum Mengumpulkan';
+            } else {
+                $this->param['getStatuses'] = 'Sudah Mengumpulkan';
+            }
+
             return view('employee.pages.my-course.details', $this->param);
         } catch (\Exception $e) {
             return redirect()->back()->withError($e->getMessage());
@@ -184,8 +207,16 @@ class EmployeeCourseController extends Controller
             $this->param['getBenefit'] = CourseBenefit::where('course_id', $getCourseID)
                                                         ->orderBy('id', 'ASC')
                                                         ->get(); //getBenefit
+            
+            $this->param['getRating'] = CourseReview::where('user_id', \Auth::user()->id)
+                                                    ->where('course_id', $getCourseID)
+                                                    ->first();
+            if ($this->param['getRating'] == null) {
+                return view('employee.pages.my-course.rating-feedback', $this->param);
+            } else {
+                return view('employee.pages.my-course.rating-feedback-done', $this->param);
+            }
 
-            return view('employee.pages.my-course.rating-feedback', $this->param);
         } catch (\Exception $e) {
             return redirect()->back()->withError($e->getMessage());
         } catch (\Illuminate\Database\QueryException $e) {

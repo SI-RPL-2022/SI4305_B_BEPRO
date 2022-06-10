@@ -21,7 +21,7 @@
 
 @section('content')
 <div id="kt_content_container" class="container-xxl">
-    @foreach ($getMyCourse as $item)    
+    @foreach ($getMyCourse as $item) 
         <div class="card mb-6">
             <div class="card-body pt-9 pb-0">
                 <div class="d-flex flex-wrap flex-sm-nowrap">
@@ -48,11 +48,29 @@
                             <div class="d-flex align-items-center w-100 flex-column">
                                 <div class="d-flex justify-content-between w-100 mt-auto mb-2">
                                     <span class="fw-bold fs-6 text-gray-400">Progress</span>
-                                    <span class="fw-bolder fs-6">50%</span>
+                                    {{-- <span class="fw-bolder fs-6">50%</span> --}}
+                                    @foreach ($getTotalContent as $itemGTC)
+                                    @if ($item->id == $itemGTC->course_id)
+                                        @foreach ($getTotalContentDone as $itemGTCD)
+                                        @if ($itemGTC->course_id == $itemGTCD->course_id)
+                                        @php
+                                            $percentage = 0;
+                                            if ($getTotalContentDone != null) {
+                                                $percentage = $itemGTCD->total_content/$itemGTC->total_content * 100;
+                                            }
+                                        @endphp
+                                        @endif
+                                        @endforeach
+                                    @endif
+                                    @endforeach
+                                    <span class="fw-bolder fs-6">{{$percentage}}%</span>
                                 </div>
                                 <div class="h-5px mx-3 w-100 bg-light mb-3">
-                                    <div class="bg-success rounded h-5px" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="bg-success rounded h-5px" role="progressbar" style="width: {{$percentage}}%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
+                                @php
+                                    $percentage = 0;
+                                @endphp
                             </div>
                         </div>
                     </div>
