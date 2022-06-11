@@ -152,7 +152,39 @@
                         <h3 class="fs-1hx text-dark mb-5">Rating & Feedback</h3>
                     </div>
                 </div>
-                
+                <div class="row align-items-center">
+                    <div class="col-md-6 pe-lg-10">
+                        <form action="{{url('/back-employee/my-course/'.$getCourse->slug.'/rating-feedback/send')}}" class="form" method="POST" id="kt_contact_form">
+                            @csrf
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <label class="fs-5 fw-bold mb-2">Rate</label>
+                                    <input id="ratinginput" name="rating" class="rating rating-loading @error('rating') is-invalid @enderror" data-min="0" data-max="5" data-step="1">
+                                    @error('rating')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>&nbsp; &nbsp; &nbsp;{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column mb-10 fv-row">
+                                <label class="fs-6 fw-bold mb-2">Saran / Masukan</label>
+                                <textarea class="form-control form-control-solid @error('feedback') is-invalid @enderror" rows="6" name="feedback" placeholder=""></textarea>
+                                @error('feedback')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>&nbsp; &nbsp; &nbsp;{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="kt_contact_submit_button">
+                                <span class="indicator-label">Kirim Pesan</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="col-md-6 ps-lg-10">
+                        <img src="{{asset('image/upload/course/thumbnail')}}/{{$getCourse->thumbnail_image}}" class="w-100">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
