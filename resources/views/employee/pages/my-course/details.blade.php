@@ -180,26 +180,34 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    @if ($getDataDone == null)
                                     <div class="row mb-6">
                                         <label class="col-lg-4 col-form-label fw-bold fs-6">Status Tugas</label>
                                         <div class="col-lg-8 fv-row">
-                                            <input type="text" name="title_module_content" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="Belum Mengumpulan" disabled/>
+                                            <input type="text" name="title_module_content" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="{{$getStatuses}}" disabled/>
                                         </div>
                                     </div>
-                                    @else
-                                    <div class="row mb-6">
-                                        <label class="col-lg-4 col-form-label fw-bold fs-6">Status Tugas</label>
-                                        <div class="col-lg-8 fv-row">
-                                            <input type="text" name="title_module_content" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="Sudah Mengumpulan" disabled/>
-                                        </div>
-                                    </div>
-                                    @endif
                                     <div class="d-flex justify-content-end">
                                         <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Simpan / Perbarui</button>
                                     </div>
                                 </form>
                             </div>
+                            @if ($pdfDone != null)   
+                            <div class="col-md-12">
+                                <div class="card h-100">
+                                    <h2 class="text-center">File Yang Sudah Dikumpulkan</h2>
+                                    <div class="card-body d-flex justify-content-center text-center flex-column p-8">
+                                        <a href="{{asset('image/upload/course/user-upload/pdf-course-module-content/'.$pdfDone)}}" class="text-gray-800 text-hover-primary d-flex flex-column">
+                                            <div class="symbol symbol-60px mb-5">
+                                                <img src="{{asset('image/pdf.svg')}}" alt="pdf-svg" />
+                                            </div>
+                                            <div class="fs-5 fw-bolder mb-2">{{$pdfDone}}
+                                                <p>(Klik Untuk Mengunduh)</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
