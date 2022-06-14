@@ -180,8 +180,10 @@ class EmployeeCourseController extends Controller
 
             if ($this->param['getDataDone'] == null or $this->param['getDataDone']->assigment == null) {
                 $this->param['getStatuses'] = 'Belum Mengumpulkan';
+                $this->param['pdfDone'] = null;
             } else {
                 $this->param['getStatuses'] = 'Sudah Mengumpulkan';
+                $this->param['pdfDone'] = $this->param['getDataDone']->assigment;
             }
 
             return view('employee.pages.my-course.details', $this->param);
@@ -376,7 +378,7 @@ class EmployeeCourseController extends Controller
 
                 if ($request->file('pdf_file')) {
                     $request->file('pdf_file')->move('image/upload/course/user-upload/pdf-course-module-content', $getUserLog.\Auth::user()->name.$date.$random.$request->file('pdf_file')->getClientOriginalName());
-                    $cmcDone->assigment = $date.$random.$request->file('pdf_file')->getClientOriginalName();
+                    $cmcDone->assigment = $getUserLog.\Auth::user()->name.$date.$random.$request->file('pdf_file')->getClientOriginalName();
                 }
 
                 $cmcDone->save();
@@ -384,7 +386,7 @@ class EmployeeCourseController extends Controller
                 $cmcDone = CourseModuleContentDone::find($getDataDone->id);
                 if ($request->file('pdf_file')) {
                     $request->file('pdf_file')->move('image/upload/course/user-upload/pdf-course-module-content', $getUserLog.\Auth::user()->name.$date.$random.$request->file('pdf_file')->getClientOriginalName());
-                    $cmcDone->assigment = $date.$random.$request->file('pdf_file')->getClientOriginalName();
+                    $cmcDone->assigment = $getUserLog.\Auth::user()->name.$date.$random.$request->file('pdf_file')->getClientOriginalName();
                 }
                 $cmcDone->save();
             }
@@ -424,7 +426,23 @@ class EmployeeCourseController extends Controller
                                                             ->orderBy('id', 'ASC')
                                                             ->get();
 
-            return view('employee.pages.my-course.quiz', $this->param);
+            $this->param['getQuizDone'] = \DB::table('report_quises')
+                                                ->select('report_quises.*')
+                                                ->join('course_module_quizes', 'report_quises.course_module_quiz_id', 'course_module_quizes.id')
+                                                ->join('course_modules', 'course_module_quizes.course_module_id', 'course_modules.id')
+                                                ->where('report_quises.user_id', \Auth::user()->id)
+                                                ->where('course_module_quizes.course_module_id', $getModuleID)
+                                                ->groupBy('report_quises.user_id', 'course_module_quizes.course_module_id')
+                                                ->first();
+
+            // dd($this->param['getQuizDone']);
+            
+            if($this->param['getQuizDone'] == null) {
+                return view('employee.pages.my-course.quiz', $this->param);
+            } else {
+                return view('employee.pages.my-course.quiz-done', $this->param);
+            }
+
         } catch (\Exception $e) {
             return redirect()->back()->withError($e->getMessage());
         } catch (\Illuminate\Database\QueryException $e) {
@@ -448,8 +466,11 @@ class EmployeeCourseController extends Controller
                 // ]);
                 $data[] = [
                     'course_module_quiz_id' => $questionID[$i],
+                    'user_id' => \Auth::user()->id,
                     'answer' => $answer[$i],
-                    'status' => 'not_corrected'
+                    'status' => 'not_corrected',
+                    'created_at' => now(),
+                    'updated_at' => now()
                 ];
             }
 

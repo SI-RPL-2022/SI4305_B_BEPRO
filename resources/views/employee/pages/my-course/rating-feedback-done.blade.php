@@ -2,9 +2,30 @@
 
 @section('extraCSS')
     <link href="{{asset('vendor/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
+
+    {{-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/css/star-rating.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.2/js/star-rating.min.js"></script> --}}
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/js/star-rating.js" type="text/javascript"></script>
+    
     <style>
         .custom-img {
             object-fit: cover;
+        }
+        .glyphicon-star:before{
+            content:"\e006";
+            font-size: 20pt;
+        }
+        .glyphicon-star-empty:before{
+            content:"\e007";
+            font-size: 20pt;
         }
     </style>
 @endsection
@@ -114,13 +135,7 @@
 <div class="toolbar" id="kt_toolbar">
     <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
         <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-            <h1 class="d-flex text-dark fw-bolder fs-5 align-items-center my-1"><span class="text-muted fw-normal">{{$getCourse->course_name}} - {{$getCourseModuleDetails->module_name}} - </span>&nbsp;{{$getCourseModuleContentDetails->title_module_content}}</h1>
-        </div>
-        <div class="d-flex align-items-center gap-2 gap-lg-3">
-            <form action="{{url('/back-employee/my-course/'.$getCourse->slug.'/'.$getCourseModuleDetails->slug.'/'.$getCourseModuleContentDetails->slug.'/mark-done')}}" method="post">
-                @csrf
-                <button type="submit" class="btn btn-sm btn-primary">Tandai Sudah Dilihat</button>
-            </form>
+            <h1 class="d-flex text-dark fw-bolder fs-5 align-items-center my-1"><span class="text-muted fw-normal">{{$getCourse->course_name}} - Persiapan Course - </span>&nbsp;Tentang Materi</h1>
         </div>
     </div>
 </div>
@@ -133,82 +148,27 @@
             <div>
                 <div class="mb-10">
                     <div class="text-center mb-15">
-                        <h3 class="fs-2hx text-dark mb-5">{{$getCourseModuleContentDetails->title_module_content}}</h3>
-                        <h3 class="fs-1hx text-dark mb-5">{{$getCourse->course_name}} - {{$getCourseModuleDetails->module_name}}</h3><br>
-                        @if ($getStatus == 'Sudah Selesai Dilihat')                        
-                            <span class="fs-1hx text-dark mt-5 rounded py-3 px-3" style="background-color: lightgreen;">{{$getStatus}}</span>
-                        @else
-                            <span class="fs-1hx text-dark mt-5 rounded py-3 px-3" style="background-color: lightcoral;">{{$getStatus}}</span>
-                        @endif
-                    </div>
-                    <div class="overlay">
-                        <iframe class="w-100" height="600" src="{{$getCourseModuleContentDetails->video_link}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <h3 class="fs-2hx text-dark mb-5">{{$getCourse->course_name}}</h3>
+                        <h3 class="fs-1hx text-dark mb-5">Rating & Feedback</h3>
                     </div>
                 </div>
-                <div class="fs-5 fw-bold text-gray-600">
-                    <p>{{$getCourseModuleContentDetails->description}}</p>
-                </div>
-                <div class="row mt-12">
-                    <div class="col-md-12 pe-md-10 mb-10 mb-md-0">
-                        <h2 class="text-gray-800 fw-bolder mb-4">PDF & Tugas (Upload Jika Ada)</h2>
-                        <div class="row g-6 g-xl-9 mb-6 mb-xl-9">
-                            <div class="col-md-6">
-                                <div class="card h-100">
-                                    <div class="card-body d-flex justify-content-center text-center flex-column p-8">
-                                        <a href="{{asset('image/upload/course/pdf-course-module-content/'.$getCourseModuleContentDetails->pdf_file)}}" class="text-gray-800 text-hover-primary d-flex flex-column">
-                                            <div class="symbol symbol-60px mb-5">
-                                                <img src="{{asset('image/pdf.svg')}}" alt="pdf-svg" />
-                                            </div>
-                                            <div class="fs-5 fw-bolder mb-2">{{$getCourseModuleContentDetails->pdf_file}}
-                                                <p>(Klik Untuk Mengunduh)</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <form action="{{url('/back-employee/my-course/'.$getCourse->slug.'/'.$getCourseModuleDetails->slug.'/'.$getCourseModuleContentDetails->slug.'/assignment')}}" method="POST" enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="row mb-6">
-                                        <label class="col-lg-4 col-form-label fw-bold fs-6">Assigment / Tugas</label>
-                                        <div class="col-lg-8 fv-row">
-                                            <input type="file" name="pdf_file" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0 @error('pdf_file') is-invalid @enderror" placeholder="PDF File" />
-                                            @error('pdf_file')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>&nbsp; &nbsp; &nbsp;{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="row mb-6">
-                                        <label class="col-lg-4 col-form-label fw-bold fs-6">Status Tugas</label>
-                                        <div class="col-lg-8 fv-row">
-                                            <input type="text" name="title_module_content" class="form-control form-control-lg form-control-solid mb-3 mb-lg-0" value="{{$getStatuses}}" disabled/>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Simpan / Perbarui</button>
-                                    </div>
-                                </form>
-                            </div>
-                            @if ($pdfDone != null)   
+                <div class="row align-items-center">
+                    <div class="col-md-6 pe-lg-10">
+                        <div class="row mb-5">
                             <div class="col-md-12">
-                                <div class="card h-100">
-                                    <h2 class="text-center">File Yang Sudah Dikumpulkan</h2>
-                                    <div class="card-body d-flex justify-content-center text-center flex-column p-8">
-                                        <a href="{{asset('image/upload/course/user-upload/pdf-course-module-content/'.$pdfDone)}}" class="text-gray-800 text-hover-primary d-flex flex-column">
-                                            <div class="symbol symbol-60px mb-5">
-                                                <img src="{{asset('image/pdf.svg')}}" alt="pdf-svg" />
-                                            </div>
-                                            <div class="fs-5 fw-bolder mb-2">{{$pdfDone}}
-                                                <p>(Klik Untuk Mengunduh)</p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
+                                <label class="fs-5 fw-bold mb-2">Rate</label><br>
+                                @for ($i = 0; $i < $getRating->rating; $i++)
+                                <img src="{{asset('image/component/star.png')}}" alt="star" style="width: 35px;">
+                                @endfor
                             </div>
-                            @endif
                         </div>
+                        <div class="d-flex flex-column mb-10 fv-row">
+                            <label class="fs-6 fw-bold mb-2">Saran / Masukan</label>
+                            <textarea class="form-control form-control-solid" disabled rows="6" name="feedback" placeholder="">{{$getRating->feedback}}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ps-lg-10">
+                        <img src="{{asset('image/upload/course/thumbnail')}}/{{$getCourse->thumbnail_image}}" class="w-100">
                     </div>
                 </div>
             </div>
@@ -227,4 +187,8 @@
 <script src="{{asset('vendor/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
 <script src="{{asset('vendor/js/custom/utilities/modals/create-app.js')}}"></script>
 <script src="{{asset('vendor/js/custom/utilities/modals/users-search.js')}}"></script>
+
+<script>
+    $("#ratinginput").rating();
+</script>
 @endsection
