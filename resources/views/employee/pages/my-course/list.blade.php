@@ -21,6 +21,9 @@
 
 @section('content')
 <div id="kt_content_container" class="container-xxl">
+    @php
+        $percentage = 0;
+    @endphp
     @foreach ($getMyCourse as $item) 
         <div class="card mb-6">
             <div class="card-body pt-9 pb-0">
@@ -54,7 +57,6 @@
                                         @foreach ($getTotalContentDone as $itemGTCD)
                                         @if ($itemGTC->course_id == $itemGTCD->course_id)
                                         @php
-                                            $percentage = 0;
                                             if ($getTotalContentDone != null) {
                                                 $percentage = $itemGTCD->total_content/$itemGTC->total_content * 100;
                                             }
