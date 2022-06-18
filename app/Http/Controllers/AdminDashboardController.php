@@ -28,7 +28,7 @@ class AdminDashboardController extends Controller
             })->count();
 
             $countEmployee = User::whereHas('roles', function($thisRole){
-                $thisRole->where('name', 'Mentor');
+                $thisRole->where('name', 'Employee');
             })->count();
 
             $this->param['countMentor'] = $countMentor;
