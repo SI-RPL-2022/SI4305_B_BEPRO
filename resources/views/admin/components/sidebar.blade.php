@@ -270,8 +270,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                
+                </div>  
                 <div data-kt-menu-trigger="click" class="menu-item @if (Request::Segment(2) == 'course-module-quiz') here show @endif menu-accordion">
                     <span class="menu-link">
                         <span class="menu-icon">
@@ -303,6 +302,26 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="menu-item">
+                    <div class="menu-content pt-8 pb-2">
+                        <span class="menu-section text-muted text-uppercase fs-8 ls-1">Menu Admin</span>
+                    </div>
+                </div>
+                <div class="menu-item">
+                    <a class="menu-link @if (Request::Segment(2) == 'progress-employee') active @endif" href="{{url('/back-admin/progress-employee/list-progress-employee')}}">
+                        <span class="menu-icon">
+                            <span class="svg-icon svg-icon-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                    <path opacity="0.5" d="M22 0h-17c-1.657 0-3 1.343-3 3v18c0 1.657 1.343 3 3 3h17v-20h-4v8l-2-2-2 2v-8h-8.505c-1.375 0-1.375-2 0-2h16.505v-2z" fill="black" />
+                                </svg>
+                            </span>
+                        </span>
+                        <span class="menu-title">Progress Karyawan</span>
+                    </a>
+                </div>
+                
+
                 {{-- 
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
