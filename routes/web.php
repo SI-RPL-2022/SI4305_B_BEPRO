@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminCourseModuleController;
 use App\Http\Controllers\AdminCourseModuleContentController;
 use App\Http\Controllers\AdminCourseModuleQuizController;
 use App\Http\Controllers\AdminProgressEmployeeController;
+use App\Http\Controllers\AdminReportQuizController;
 
 use App\Http\Controllers\MentorDashboardController;
 use App\Http\Controllers\MentorCategoryCourseController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\MentorBenefitCourseController;
 use App\Http\Controllers\MentorCourseModuleController;
 use App\Http\Controllers\MentorCourseModuleContentController;
 use App\Http\Controllers\MentorCourseModuleQuizController;
+use App\Http\Controllers\MentorReportQuizController;
 
 use App\Http\Controllers\EmployeeDashboardController;
 use App\Http\Controllers\EmployeeCourseController;
@@ -115,6 +117,12 @@ Route::delete('/back-admin/course-module-quiz/{id}/destroy-course-module-quiz', 
 
 Route::get('/back-admin/progress-employee/list-progress-employee', [AdminProgressEmployeeController::class, 'index']);
 Route::post('/back-admin/progress-employee/detail-progress-employee/{id}', [AdminProgressEmployeeController::class, 'detail']);
+Route::get('/back-admin/progress-employee/report-quiz/{idUser}/{slugCourse}/persiapan-course', [AdminProgressEmployeeController::class, 'reportQuiz']);
+Route::get('/back-admin/report-quiz/{idUser}/{slugCourse}/{slugModule}/detail', [AdminProgressEmployeeController::class, 'detailQuiz']);
+Route::put('/back-admin/report-quiz/update-quiz-user', [AdminProgressEmployeeController::class, 'updateQuizUser']);
+
+Route::get('/back-admin/report-quiz/list-report-quiz', [AdminReportQuizController::class, 'index']);
+Route::get('/back-admin/report-quiz/export', [AdminReportQuizController::class, 'exportEmployeesQuiz']);
 
 // mentor
 Route::get('/back-mentor/dashboard', [MentorDashboardController::class, 'index']);
@@ -156,6 +164,12 @@ Route::post('/back-mentor/course-module-quiz/store-course-module-quiz', [MentorC
 Route::post('/back-mentor/course-module-quiz/{id}/edit-course-module-quiz', [MentorCourseModuleQuizController::class, 'edit']);
 Route::put('/back-mentor/course-module-quiz/{id}/update-course-module-quiz', [MentorCourseModuleQuizController::class, 'update']);
 Route::delete('/back-mentor/course-module-quiz/{id}/destroy-course-module-quiz', [MentorCourseModuleQuizController::class, 'destroy']);
+
+Route::get('/back-mentor/progress-employee/list-progress-employee', [MentorReportQuizController::class, 'index']);
+Route::post('/back-mentor/progress-employee/detail-progress-employee/{id}', [MentorReportQuizController::class, 'detail']);
+Route::get('/back-mentor/progress-employee/report-quiz/{idUser}/{slugCourse}/persiapan-course', [MentorReportQuizController::class, 'reportQuiz']);
+Route::get('/back-mentor/report-quiz/{idUser}/{slugCourse}/{slugModule}/detail', [MentorReportQuizController::class, 'detailQuiz']);
+Route::put('/back-mentor/report-quiz/update-quiz-user', [MentorReportQuizController::class, 'updateQuizUser']);
 
 // employee
 Route::get('/back-employee/dashboard', [EmployeeDashboardController::class, 'index']);
