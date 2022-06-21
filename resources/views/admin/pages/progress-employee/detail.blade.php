@@ -43,6 +43,12 @@
                                     <span class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">{{ \Illuminate\Support\Str::limit($item->description, 250, $end='...') }}</span>
                                 </div>
                             </div>
+                            <div class="d-flex my-4">
+                                <a href="{{url('/back-admin/progress-employee/report-quiz/'.$getUserID.'/'.$item->slug).'/persiapan-course'}}" class="btn btn-sm btn-primary me-2">Berikan Penilaian Quiz</a>
+                            </div>
+                            {{-- <div class="d-flex my-4">
+                                <a href="{{url('/back-employee/my-course/'.$item->slug).'/persiapan-course'}}" class="btn btn-sm btn-primary me-2">Berikan Penilaian Quiz</a>
+                            </div> --}}
                         </div>
                         <div class="d-flex flex-wrap">
                             <div class="d-flex align-items-center w-100 flex-column">

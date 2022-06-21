@@ -12,11 +12,11 @@ use App\Models\CourseBenefit;
 use App\Models\CourseModuleQuiz;
 use App\Models\ReportQuiz;
 
-class AdminProgressEmployeeController extends Controller
+class MentorReportQuizController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['role:Admin']);
+        $this->middleware(['role:Mentor']);
     }
     
     private $param;
@@ -25,10 +25,8 @@ class AdminProgressEmployeeController extends Controller
             $this->param['getEmployee'] = User::whereHas('roles', function($thisRole){
                 $thisRole->where('name', 'Employee');
             })->get();
-            // $this->param['getDivision'] = Division::all(); 
-            // return view('admin.pages.division.list', $this->param);
 
-            return view('admin.pages.progress-employee.list', $this->param);
+            return view('mentor.pages.progress-employee.list', $this->param);
         } catch (\Exception $e) {
             return redirect()->back()->withError($e->getMessage());
         } catch (\Illuminate\Database\QueryException $e) {
@@ -60,7 +58,7 @@ class AdminProgressEmployeeController extends Controller
                                                 ->groupBy('courses.course_name')
                                                 ->get();
 
-            return view('admin.pages.progress-employee.detail', $this->param);
+            return view('mentor.pages.progress-employee.detail', $this->param);
         } catch (\Exception $e) {
             return redirect()->back()->withError($e->getMessage());
         } catch (\Illuminate\Database\QueryException $e) {
@@ -84,7 +82,7 @@ class AdminProgressEmployeeController extends Controller
                                                         ->orderBy('id', 'ASC')
                                                         ->get(); //getBenefit
 
-            return view('admin.pages.progress-employee.report-quiz', $this->param);
+            return view('mentor.pages.progress-employee.report-quiz', $this->param);
         } catch (\Exception $e) {
             return redirect()->back()->withError($e->getMessage());
         } catch (\Illuminate\Database\QueryException $e) {
@@ -136,7 +134,7 @@ class AdminProgressEmployeeController extends Controller
             
             // dd($this->param['getReportNotCorrected']);
 
-            return view('admin.pages.progress-employee.report-quiz-detail', $this->param);
+            return view('mentor.pages.progress-employee.report-quiz-detail', $this->param);
         } catch (\Exception $e) {
             return redirect()->back()->withError($e->getMessage());
         } catch (\Illuminate\Database\QueryException $e) {
