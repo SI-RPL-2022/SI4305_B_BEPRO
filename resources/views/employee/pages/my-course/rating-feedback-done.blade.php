@@ -158,7 +158,7 @@
                             <div class="col-md-12">
                                 <label class="fs-5 fw-bold mb-2">Rate</label><br>
                                 @for ($i = 0; $i < $getRating->rating; $i++)
-                                <img src="{{asset('image/component/star.png')}}" alt="star" style="width: 35px;">
+                                <img src="https://firebasestorage.googleapis.com/v0/b/investa-image-upload.appspot.com/o/star.png?alt=media&token=817cb162-2b19-4db5-9cc6-38c69e28c941" alt="star" style="width: 35px;">
                                 @endfor
                             </div>
                         </div>
